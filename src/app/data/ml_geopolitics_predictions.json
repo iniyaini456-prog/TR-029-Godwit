@@ -1,0 +1,84 @@
+{
+  "module": "Geopolitical Event NLP",
+  "model_type": "GDELT Sentiment & Event Frequency Extraction",
+  "geopolitical_predictions": {
+    "USA": {
+      "disruptive_news_articles": 20874,
+      "average_sentiment_tone": -1.97,
+      "geopolitical_risk_tier": "High Geopolitical Tension",
+      "disruption_probability_multiplier": 1.4
+    },
+    "Netherlands": {
+      "disruptive_news_articles": 1210,
+      "average_sentiment_tone": -2.15,
+      "geopolitical_risk_tier": "Stable",
+      "disruption_probability_multiplier": 1.091
+    },
+    "China": {
+      "disruptive_news_articles": 7625,
+      "average_sentiment_tone": -1.81,
+      "geopolitical_risk_tier": "Stable",
+      "disruption_probability_multiplier": 1.138
+    },
+    "South Korea": {
+      "disruptive_news_articles": 1125,
+      "average_sentiment_tone": -1.45,
+      "geopolitical_risk_tier": "Stable",
+      "disruption_probability_multiplier": 1.01
+    },
+    "Germany": {
+      "disruptive_news_articles": 5484,
+      "average_sentiment_tone": -2.05,
+      "geopolitical_risk_tier": "Elevated Risk",
+      "disruption_probability_multiplier": 1.176
+    },
+    "India": {
+      "disruptive_news_articles": 4161,
+      "average_sentiment_tone": -1.61,
+      "geopolitical_risk_tier": "Stable",
+      "disruption_probability_multiplier": 1.07
+    },
+    "Singapore": {
+      "disruptive_news_articles": 644,
+      "average_sentiment_tone": 0.01,
+      "geopolitical_risk_tier": "Stable",
+      "disruption_probability_multiplier": 1.0
+    },
+    "Taiwan": {
+      "disruptive_news_articles": 925,
+      "average_sentiment_tone": -2.02,
+      "geopolitical_risk_tier": "Stable",
+      "disruption_probability_multiplier": 1.086
+    },
+    "Czech Republic": {
+      "disruptive_news_articles": 666,
+      "average_sentiment_tone": -3.61,
+      "geopolitical_risk_tier": "Stable",
+      "disruption_probability_multiplier": 1.08
+    },
+    "Mexico": {
+      "disruptive_news_articles": 1260,
+      "average_sentiment_tone": -2.43,
+      "geopolitical_risk_tier": "Stable",
+      "disruption_probability_multiplier": 1.092
+    },
+    "Chile": {
+      "disruptive_news_articles": 1346,
+      "average_sentiment_tone": -1.86,
+      "geopolitical_risk_tier": "Stable",
+      "disruption_probability_multiplier": 1.014
+    },
+    "EU": {
+      "disruptive_news_articles": 0,
+      "average_sentiment_tone": 0.0,
+      "geopolitical_risk_tier": "Stable",
+      "disruption_probability_multiplier": 1.0
+    },
+    "APAC": {
+      "disruptive_news_articles": 0,
+      "average_sentiment_tone": 0.0,
+      "geopolitical_risk_tier": "Stable",
+      "disruption_probability_multiplier": 1.0
+    }
+  }
+}

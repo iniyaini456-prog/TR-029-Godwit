@@ -1,0 +1,33 @@
+{
+  "modelStatus": "Trained",
+  "r2_score": 0.9094,
+  "mse": 0.0072,
+  "mean_delay_probability": 0.8010634183883667,
+  "historical_variance": 0.2676232159137726,
+  "feature_importances": {
+    "vehicle_gps_latitude": 0.000536720734089613,
+    "vehicle_gps_longitude": 0.0006141588091850281,
+    "handling_equipment_availability": 0.0006358221871778369,
+    "delay_probability": 0.0006447762716561556,
+    "driver_behavior_score": 0.0006555558647960424,
+    "delivery_time_deviation": 0.0006562372436746955,
+    "lead_time_days": 0.0006624161615036428,
+    "shipping_costs": 0.0006633560406044126,
+    "supplier_reliability_score": 0.0006773446802981198,
+    "customs_clearance_time": 0.0006843124283477664,
+    "loading_unloading_time": 0.0006865760660730302,
+    "weather_condition_severity": 0.0006899654981680214,
+    "eta_variation_hours": 0.0007115138578228652,
+    "historical_demand": 0.0007133684121072292,
+    "port_congestion_level": 0.0007262584404088557,
+    "route_risk_level": 0.0007276198593899608,
+    "iot_temperature": 0.0007296998519450426,
+    "fatigue_monitoring_score": 0.0007333109388127923,
+    "fuel_consumption_rate": 0.0007400226313620806,
+    "warehouse_inventory_level": 0.0007429018733091652,
+    "order_fulfillment_status": 0.0007822251645848155,
+    "traffic_congestion_level": 0.0007895483868196607,
+    "cargo_condition_status": 0.0008120819111354649,
+    "risk_classification": 0.9839842319488525
+  }
+}

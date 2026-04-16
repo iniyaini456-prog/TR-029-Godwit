@@ -3,6 +3,7 @@ import { Badge } from "../components/ui/badge";
 import { AlertTriangle } from "lucide-react";
 import { disruptionScenarios, supplyChainNodes, supplyChainEdges } from "../data/mockData";
 import { simulateDisruption } from "../utils/simulationEngine";
+import mlData from '../data/ml_predictions.json';
 import {
   BarChart,
   Bar,
@@ -20,13 +21,18 @@ export function DisruptionLibrary() {
     simulateDisruption(d, supplyChainNodes, supplyChainEdges)
   );
 
-  const riskData = disruptionScenarios.map((d) => ({
-    name: d.name.substring(0, 15),
-    probability: d.probability * 100,
-    impact: d.impactScore,
-    riskScore: d.probability * d.impactScore,
-    duration: d.duration,
-  }));
+  const riskData = disruptionScenarios.map((d) => {
+    // Dynamically shift probability based on the ML Model
+    const mlModulatedProb = mlData?.mean_delay_probability ? (d.probability * mlData.mean_delay_probability * 2) : d.probability;
+    
+    return {
+      name: d.name.substring(0, 15),
+      probability: mlModulatedProb * 100,
+      impact: d.impactScore,
+      riskScore: mlModulatedProb * d.impactScore,
+      duration: d.duration,
+    };
+  });
 
   const typeMap: Record<string, string> = {
     port_closure: "⚓ Port Closure",
@@ -91,17 +97,17 @@ export function DisruptionLibrary() {
                       </div>
                       <Badge
                         variant={
-                          d.probability * d.impactScore > 60 ? "destructive" : "secondary"
+                          ((mlData?.mean_delay_probability ? (d.probability * mlData.mean_delay_probability * 2) : d.probability) * d.impactScore) > 60 ? "destructive" : "secondary"
                         }
                       >
-                        Risk: {Math.round(d.probability * d.impactScore)}
+                        Risk: {Math.round((mlData?.mean_delay_probability ? (d.probability * mlData.mean_delay_probability * 2) : d.probability) * d.impactScore)}
                       </Badge>
                     </div>
 
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
                       <div>
-                        <p className="text-gray-600 text-xs">Probability</p>
-                        <p className="font-semibold">{(d.probability * 100).toFixed(1)}%</p>
+                        <p className="text-gray-600 text-xs">Probability (ML Driven)</p>
+                        <p className="font-semibold text-blue-600">{((mlData?.mean_delay_probability ? (d.probability * mlData.mean_delay_probability * 2) : d.probability) * 100).toFixed(1)}%</p>
                       </div>
                       <div>
                         <p className="text-gray-600 text-xs">Impact Score</p>

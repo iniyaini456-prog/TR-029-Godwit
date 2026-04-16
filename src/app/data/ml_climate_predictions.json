@@ -1,0 +1,72 @@
+{
+  "module": "Climate & Environmental Risk",
+  "model_type": "K-Means Clustering (Spatial Fire Density)",
+  "climate_predictions": {
+    "Chile": {
+      "satellite_total_anomalies": 47833,
+      "max_fire_radiative_power": 648.6,
+      "climate_risk_tier": "Tier 2: Moderate",
+      "disruption_probability_multiplier": 1.15
+    },
+    "China": {
+      "satellite_total_anomalies": 928083,
+      "max_fire_radiative_power": 1088.16,
+      "climate_risk_tier": "Tier 3: Extreme",
+      "disruption_probability_multiplier": 1.35
+    },
+    "Germany": {
+      "satellite_total_anomalies": 44260,
+      "max_fire_radiative_power": 206.99,
+      "climate_risk_tier": "Tier 1: Safe",
+      "disruption_probability_multiplier": 1.0
+    },
+    "USA": {
+      "satellite_total_anomalies": 1009657,
+      "max_fire_radiative_power": 2167.12,
+      "climate_risk_tier": "Tier 3: Extreme",
+      "disruption_probability_multiplier": 1.35
+    },
+    "South Korea": {
+      "satellite_total_anomalies": 0,
+      "max_fire_radiative_power": 0.0,
+      "climate_risk_tier": "Tier 1: Safe",
+      "disruption_probability_multiplier": 1.0
+    },
+    "Taiwan": {
+      "satellite_total_anomalies": 3212,
+      "max_fire_radiative_power": 66.42,
+      "climate_risk_tier": "Tier 1: Safe",
+      "disruption_probability_multiplier": 1.0
+    },
+    "India": {
+      "satellite_total_anomalies": 1188216,
+      "max_fire_radiative_power": 784.85,
+      "climate_risk_tier": "Tier 3: Extreme",
+      "disruption_probability_multiplier": 1.35
+    },
+    "Mexico": {
+      "satellite_total_anomalies": 669555,
+      "max_fire_radiative_power": 883.67,
+      "climate_risk_tier": "Tier 3: Extreme",
+      "disruption_probability_multiplier": 1.35
+    },
+    "Czech Republic": {
+      "satellite_total_anomalies": 3444,
+      "max_fire_radiative_power": 64.68,
+      "climate_risk_tier": "Tier 1: Safe",
+      "disruption_probability_multiplier": 1.0
+    },
+    "Singapore": {
+      "satellite_total_anomalies": 54,
+      "max_fire_radiative_power": 5.27,
+      "climate_risk_tier": "Tier 1: Safe",
+      "disruption_probability_multiplier": 1.0
+    },
+    "Netherlands": {
+      "satellite_total_anomalies": 6973,
+      "max_fire_radiative_power": 226.76,
+      "climate_risk_tier": "Tier 1: Safe",
+      "disruption_probability_multiplier": 1.0
+    }
+  }
+}

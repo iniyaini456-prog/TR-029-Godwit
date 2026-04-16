@@ -3,13 +3,16 @@ import ForceGraph2D from "react-force-graph-2d";
 import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { supplyChainNodes, supplyChainEdges } from "../data/mockData";
+import { calculateNetworkMetrics } from "../utils/simulationEngine";
 import { Slider } from "../components/ui/slider";
 import { Label } from "../components/ui/label";
 
 export function NetworkView() {
   const graphRef = useRef<any>();
+  const containerRef = useRef<HTMLDivElement>(null);
   const [selectedNode, setSelectedNode] = useState<any>(null);
   const [zoomLevel, setZoomLevel] = useState([3]);
+  const [dimensions, setDimensions] = useState({ width: 800, height: 500 });
 
   // Transform data for force graph
   const graphData = {
@@ -34,10 +37,27 @@ export function NetworkView() {
   };
 
   useEffect(() => {
-    if (graphRef.current) {
-      // Center graph
-      graphRef.current.zoomToFit(400, 100);
-    }
+    // Responsive width handler
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        setDimensions({
+          width: containerRef.current.offsetWidth,
+          height: 500, // Taller graph so it's not cropped vertically
+        });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+
+    // Give graph time to mount before centering it
+    setTimeout(() => {
+      if (graphRef.current) {
+        graphRef.current.zoomToFit(400, 100);
+      }
+    }, 500);
+
+    return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
   const getNodeColor = (type: string) => {
@@ -56,7 +76,16 @@ export function NetworkView() {
   };
 
   const getNodeLabel = (node: any) => {
-    return node.name;
+    return `
+      <div style="background: rgba(255,255,255,0.95); padding: 10px; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #ccc; color: #333; font-family: sans-serif; min-width: 150px;">
+        <strong style="display:block; margin-bottom: 4px; border-bottom: 1px solid #eee; padding-bottom: 4px; color: ${getNodeColor(node.type)}">${node.name}</strong>
+        <p style="margin: 2px 0; font-size: 13px;"><b>Type:</b> <span style="text-transform: capitalize;">${node.type}</span></p>
+        <p style="margin: 2px 0; font-size: 13px;"><b>Location:</b> ${node.location}</p>
+        <p style="margin: 2px 0; font-size: 13px;"><b>Capacity:</b> ${node.capacity.toLocaleString()} units</p>
+        <p style="margin: 2px 0; font-size: 13px;"><b>Tier:</b> Tier ${node.tier}</p>
+        <em style="display:block; margin-top: 6px; font-size: 11px; color: #888;">(Click node to view full details below)</em>
+      </div>
+    `;
   };
 
   return (
@@ -67,7 +96,7 @@ export function NetworkView() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="h-96 border border-gray-200 rounded-lg overflow-hidden bg-white">
+            <div ref={containerRef} className="border border-gray-200 rounded-lg overflow-hidden bg-white" style={{ height: 500 }}>
               <ForceGraph2D
                 ref={graphRef}
                 graphData={graphData}
@@ -84,11 +113,15 @@ export function NetworkView() {
                   ctx.fillStyle = "#000";
                   ctx.fillText(label, node.x, node.y);
                 }}
-                onNodeClick={(node: any) => setSelectedNode(node)}
+                onNodeClick={(node: any) => {
+                  setSelectedNode(node);
+                  // Auto scroll safely to the details panel when clicked
+                  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                }}
                 linkColor={() => "rgba(0,0,0,0.2)"}
                 linkWidth={0.5}
-                width={undefined}
-                height={384}
+                width={dimensions.width}
+                height={dimensions.height}
               />
             </div>
 
@@ -193,12 +226,7 @@ export function NetworkView() {
             <div>
               <p className="text-sm text-gray-600">Avg Reliability</p>
               <p className="text-2xl font-bold">
-                {(
-                  (supplyChainEdges.reduce((sum, e) => sum + e.reliability, 0) /
-                    supplyChainEdges.length) *
-                  100
-                ).toFixed(1)}
-                %
+                {(calculateNetworkMetrics(supplyChainNodes, supplyChainEdges).networkReliability * 100).toFixed(1)}%
               </p>
             </div>
           </div>

@@ -1,0 +1,726 @@
+{
+  "module": "Macro-Logistics & Trade",
+  "model_type": "Isolation Forest (Anomaly Detection)",
+  "country_reliability": {
+    "Singapore": {
+      "lpi_score": 4.3,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.5
+    },
+    "Finland": {
+      "lpi_score": 4.2,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7712
+    },
+    "Denmark": {
+      "lpi_score": 4.1,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7728
+    },
+    "Germany": {
+      "lpi_score": 4.1,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8095
+    },
+    "Netherlands": {
+      "lpi_score": 4.1,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8149
+    },
+    "Switzerland": {
+      "lpi_score": 4.1,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.6828
+    },
+    "Austria": {
+      "lpi_score": 4.0,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7728
+    },
+    "Belgium": {
+      "lpi_score": 4.0,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8152
+    },
+    "Canada": {
+      "lpi_score": 4.0,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7872
+    },
+    "Hong Kong SAR, China": {
+      "lpi_score": 4.0,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8277
+    },
+    "Sweden": {
+      "lpi_score": 4.0,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8287
+    },
+    "United Arab Emirates": {
+      "lpi_score": 4.0,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8279
+    },
+    "France": {
+      "lpi_score": 3.9,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8668
+    },
+    "Japan": {
+      "lpi_score": 3.9,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8184
+    },
+    "Spain": {
+      "lpi_score": 3.9,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8397
+    },
+    "Taiwan, China": {
+      "lpi_score": 3.9,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8379
+    },
+    "Korea, Rep.": {
+      "lpi_score": 3.8,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7887
+    },
+    "United States": {
+      "lpi_score": 3.8,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8703
+    },
+    "Australia": {
+      "lpi_score": 3.7,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7839
+    },
+    "China": {
+      "lpi_score": 3.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8556
+    },
+    "Greece": {
+      "lpi_score": 3.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8855
+    },
+    "Italy": {
+      "lpi_score": 3.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9213
+    },
+    "Norway": {
+      "lpi_score": 3.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8482
+    },
+    "South Africa": {
+      "lpi_score": 3.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9422
+    },
+    "United Kingdom": {
+      "lpi_score": 3.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9001
+    },
+    "Estonia": {
+      "lpi_score": 3.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8384
+    },
+    "Iceland": {
+      "lpi_score": 3.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8245
+    },
+    "Ireland": {
+      "lpi_score": 3.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9195
+    },
+    "Israel": {
+      "lpi_score": 3.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9343
+    },
+    "Luxembourg": {
+      "lpi_score": 3.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.803
+    },
+    "Malaysia": {
+      "lpi_score": 3.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9498
+    },
+    "New Zealand": {
+      "lpi_score": 3.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9096
+    },
+    "Poland": {
+      "lpi_score": 3.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8821
+    },
+    "Bahrain": {
+      "lpi_score": 3.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8198
+    },
+    "Latvia": {
+      "lpi_score": 3.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.832
+    },
+    "Qatar": {
+      "lpi_score": 3.5,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7832
+    },
+    "Thailand": {
+      "lpi_score": 3.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.882
+    },
+    "India": {
+      "lpi_score": 3.4,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9264
+    },
+    "Lithuania": {
+      "lpi_score": 3.4,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9377
+    },
+    "Portugal": {
+      "lpi_score": 3.4,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9388
+    },
+    "Saudi Arabia": {
+      "lpi_score": 3.4,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9149
+    },
+    "TC<rkiye": {
+      "lpi_score": 3.4,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.92
+    },
+    "Croatia": {
+      "lpi_score": 3.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9144
+    },
+    "Czech Republic": {
+      "lpi_score": 3.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8229
+    },
+    "Malta": {
+      "lpi_score": 3.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8169
+    },
+    "Oman": {
+      "lpi_score": 3.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8739
+    },
+    "Philippines": {
+      "lpi_score": 3.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8058
+    },
+    "Slovak Republic": {
+      "lpi_score": 3.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9132
+    },
+    "Slovenia": {
+      "lpi_score": 3.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8424
+    },
+    "Vietnam": {
+      "lpi_score": 3.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.912
+    },
+    "Brazil": {
+      "lpi_score": 3.2,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9388
+    },
+    "Bulgaria": {
+      "lpi_score": 3.2,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9374
+    },
+    "Cyprus": {
+      "lpi_score": 3.2,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9259
+    },
+    "Hungary": {
+      "lpi_score": 3.2,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9045
+    },
+    "Kuwait": {
+      "lpi_score": 3.2,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.6997
+    },
+    "Romania": {
+      "lpi_score": 3.2,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8975
+    },
+    "Botswana": {
+      "lpi_score": 3.1,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.922
+    },
+    "Egypt, Arab Rep.": {
+      "lpi_score": 3.1,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9108
+    },
+    "North Macedonia": {
+      "lpi_score": 3.1,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9245
+    },
+    "Panama": {
+      "lpi_score": 3.1,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8851
+    },
+    "Bosnia and Herzegovina": {
+      "lpi_score": 3.0,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9668
+    },
+    "Chile": {
+      "lpi_score": 3.0,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.942
+    },
+    "Indonesia": {
+      "lpi_score": 3.0,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.952
+    },
+    "Peru": {
+      "lpi_score": 3.0,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9347
+    },
+    "Uruguay": {
+      "lpi_score": 3.0,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9464
+    },
+    "Antigua and Barbuda": {
+      "lpi_score": 2.9,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8563
+    },
+    "Benin": {
+      "lpi_score": 2.9,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8515
+    },
+    "Colombia": {
+      "lpi_score": 2.9,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9294
+    },
+    "Costa Rica": {
+      "lpi_score": 2.9,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9826
+    },
+    "Honduras": {
+      "lpi_score": 2.9,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9422
+    },
+    "Mexico": {
+      "lpi_score": 2.9,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9069
+    },
+    "Namibia": {
+      "lpi_score": 2.9,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9094
+    },
+    "Argentina": {
+      "lpi_score": 2.8,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9473
+    },
+    "Montenegro": {
+      "lpi_score": 2.8,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.975
+    },
+    "Rwanda": {
+      "lpi_score": 2.8,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9309
+    },
+    "Serbia": {
+      "lpi_score": 2.8,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8723
+    },
+    "Solomon Islands": {
+      "lpi_score": 2.8,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9439
+    },
+    "Sri Lanka": {
+      "lpi_score": 2.8,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9603
+    },
+    "Bahamas, The": {
+      "lpi_score": 2.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9315
+    },
+    "Belarus": {
+      "lpi_score": 2.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9774
+    },
+    "Djibouti": {
+      "lpi_score": 2.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.844
+    },
+    "El Salvador": {
+      "lpi_score": 2.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9374
+    },
+    "Georgia": {
+      "lpi_score": 2.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9749
+    },
+    "Kazakhstan": {
+      "lpi_score": 2.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9807
+    },
+    "Papua New Guinea": {
+      "lpi_score": 2.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9631
+    },
+    "Paraguay": {
+      "lpi_score": 2.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9856
+    },
+    "Ukraine": {
+      "lpi_score": 2.7,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9916
+    },
+    "Bangladesh": {
+      "lpi_score": 2.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9668
+    },
+    "Congo, Rep.": {
+      "lpi_score": 2.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8663
+    },
+    "Dominican Republic": {
+      "lpi_score": 2.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9774
+    },
+    "Guatemala": {
+      "lpi_score": 2.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9724
+    },
+    "Guinea-Bissau": {
+      "lpi_score": 2.6,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.8021
+    },
+    "Mali": {
+      "lpi_score": 2.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8432
+    },
+    "Nigeria": {
+      "lpi_score": 2.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9269
+    },
+    "Russian Federation": {
+      "lpi_score": 2.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9191
+    },
+    "Uzbekistan": {
+      "lpi_score": 2.6,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9631
+    },
+    "Albania": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8472
+    },
+    "Algeria": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9052
+    },
+    "Armenia": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9301
+    },
+    "Bhutan": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8634
+    },
+    "Central African Republic": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8796
+    },
+    "Congo, Dem. Rep.": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 1.0
+    },
+    "Ghana": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9092
+    },
+    "Grenada": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.877
+    },
+    "Guinea": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9303
+    },
+    "Jamaica": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.982
+    },
+    "Mauritius": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9778
+    },
+    "Moldova": {
+      "lpi_score": 2.5,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7895
+    },
+    "Mongolia": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9162
+    },
+    "Nicaragua": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8297
+    },
+    "Tajikistan": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9381
+    },
+    "Togo": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 1.0
+    },
+    "Trinidad and Tobago": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9846
+    },
+    "Zimbabwe": {
+      "lpi_score": 2.5,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9731
+    },
+    "Bolivia": {
+      "lpi_score": 2.4,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9447
+    },
+    "Cambodia": {
+      "lpi_score": 2.4,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9348
+    },
+    "Gabon": {
+      "lpi_score": 2.4,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7668
+    },
+    "Guyana": {
+      "lpi_score": 2.4,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9836
+    },
+    "Iraq": {
+      "lpi_score": 2.4,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8853
+    },
+    "Lao PDR": {
+      "lpi_score": 2.4,
+      "is_anomalous": false,
+      "reliability_multiplier": 1.0
+    },
+    "Liberia": {
+      "lpi_score": 2.4,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.897
+    },
+    "Sudan": {
+      "lpi_score": 2.4,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9668
+    },
+    "Burkina Faso": {
+      "lpi_score": 2.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9064
+    },
+    "Fiji": {
+      "lpi_score": 2.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8745
+    },
+    "Gambia, The": {
+      "lpi_score": 2.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8354
+    },
+    "Iran, Islamic Rep.": {
+      "lpi_score": 2.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8791
+    },
+    "Kyrgyz Republic": {
+      "lpi_score": 2.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9235
+    },
+    "Madagascar": {
+      "lpi_score": 2.3,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7512
+    },
+    "Mauritania": {
+      "lpi_score": 2.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9082
+    },
+    "Syrian Arab Republic": {
+      "lpi_score": 2.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9376
+    },
+    "Venezuela, RB": {
+      "lpi_score": 2.3,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9451
+    },
+    "Cuba": {
+      "lpi_score": 2.2,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9046
+    },
+    "Yemen, Rep.": {
+      "lpi_score": 2.2,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7609
+    },
+    "Angola": {
+      "lpi_score": 2.1,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.6589
+    },
+    "Cameroon": {
+      "lpi_score": 2.1,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.6967
+    },
+    "Haiti": {
+      "lpi_score": 2.1,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7627
+    },
+    "Somalia": {
+      "lpi_score": 2.0,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.5538
+    },
+    "Afghanistan": {
+      "lpi_score": 1.9,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7115
+    },
+    "Libya": {
+      "lpi_score": 1.9,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.6142
+    },
+    "EU": {
+      "lpi_score": 4.0,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.95
+    },
+    "APAC": {
+      "lpi_score": 3.8,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.9
+    },
+    "Taiwan": {
+      "lpi_score": 3.9,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.92
+    },
+    "USA": {
+      "lpi_score": 3.8,
+      "is_anomalous": false,
+      "reliability_multiplier": 0.8703
+    },
+    "South Korea": {
+      "lpi_score": 3.8,
+      "is_anomalous": true,
+      "reliability_multiplier": 0.7887
+    }
+  }
+}

@@ -7,6 +7,11 @@ import {
   ResilienceStrategy,
 } from '../data/mockData';
 
+import mlData from '../data/ml_predictions.json';
+import logisticsData from '../data/ml_logistics_predictions.json';
+import climateData from '../data/ml_climate_predictions.json';
+import geopoliticsData from '../data/ml_geopolitics_predictions.json';
+
 export interface NetworkMetrics {
   totalNodes: number;
   totalEdges: number;
@@ -27,12 +32,25 @@ export interface DisruptionImpact {
   cascadeEffects: string[];
 }
 
+export function getDynamicEdgeReliability(edge: SupplyChainEdge, nodes: SupplyChainNode[]): number {
+  const sourceNode = nodes.find(n => n.id === edge.source);
+  if (!sourceNode) return edge.reliability;
+  
+  // Throttle base reliability using the Phase 1 Macro-Logistics Anomaly AI Model
+  const logisticsScore = (logisticsData as any)?.country_reliability?.[sourceNode.country]?.reliability_multiplier;
+  if (logisticsScore) {
+    return edge.reliability * logisticsScore;
+  }
+  return edge.reliability;
+}
+
 export function calculateNetworkMetrics(
   nodes: SupplyChainNode[],
   edges: SupplyChainEdge[]
 ): NetworkMetrics {
   const avgLeadTime = edges.reduce((sum, e) => sum + e.leadTime, 0) / edges.length;
-  const avgReliability = edges.reduce((sum, e) => sum + e.reliability, 0) / edges.length;
+  // Use ML-driven Edge Reliability instead of static
+  const avgReliability = edges.reduce((sum, e) => sum + getDynamicEdgeReliability(e, nodes), 0) / edges.length;
   const totalCapacity = nodes.reduce((sum, n) => sum + n.capacity, 0);
   
   // Calculate critical path (simplified - longest path through network)
@@ -48,9 +66,11 @@ export function calculateNetworkMetrics(
   };
 }
 
-// Helper: Calculate varied lead time (±15% stochastic variation)
+// Helper: Calculate varied lead time using ML Variance
 function getVariedLeadTime(baseTime: number): number {
-  const variation = (Math.random() - 0.5) * 0.3; // ±15%
+  // Pull historical variance from ML model, fallback to 30% bounds
+  const mlVariance = mlData?.historical_variance || 0.3;
+  const variation = (Math.random() - 0.5) * mlVariance; 
   return Math.round(baseTime * (1 + variation));
 }
 
@@ -248,13 +268,36 @@ export function runMonteCarlo(
   const results: number[] = [];
   
   for (let i = 0; i < iterations; i++) {
-    // Randomly select disruption based on probability
+    // Randomly select disruption based on dynamically altered ML probability
     const random = Math.random();
     let cumulativeProb = 0;
     let selectedDisruption = disruptions[0];
     
     for (const disruption of disruptions) {
-      cumulativeProb += disruption.probability;
+      // Modulate base probability by the real-time ML forecasts (Climate + Geopolitics)
+      let combinedMultiplier = 1.0;
+      
+      if (disruption.affectedRegions && disruption.affectedRegions.length > 0) {
+        let maxClimateRisk = 1.0;
+        let maxGeoRisk = 1.0;
+        
+        disruption.affectedRegions.forEach(region => {
+           const climate = (climateData as any)?.climate_predictions?.[region];
+           if (climate) maxClimateRisk = Math.max(maxClimateRisk, climate.disruption_probability_multiplier);
+           
+           const geo = (geopoliticsData as any)?.geopolitical_predictions?.[region];
+           if (geo) maxGeoRisk = Math.max(maxGeoRisk, geo.disruption_probability_multiplier);
+        });
+        combinedMultiplier = maxClimateRisk * maxGeoRisk;
+      }
+
+      // Add baseline XGBoost variance shifts 
+      const xgbShift = mlData?.mean_delay_probability ? (mlData.mean_delay_probability) : 0;
+      
+      // Final compounded probability shift
+      const mlProbabilityShift = (disruption.probability * combinedMultiplier) + (disruption.probability * xgbShift);
+      cumulativeProb += mlProbabilityShift;
+
       if (random <= cumulativeProb) {
         selectedDisruption = disruption;
         break;

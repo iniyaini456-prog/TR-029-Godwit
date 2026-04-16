@@ -84,11 +84,11 @@ export function ERPIntegration() {
         </p>
       </div>
 
-      {/* For Judges - Quick Start */}
+      {/* Quick Start */}
       <Card className="bg-blue-50 border-blue-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            👨‍⚖️ For Judges - How to Test
+            👨‍💻 Quick Start - How to Test
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -329,7 +329,7 @@ export function ERPIntegration() {
       {/* FAQ */}
       <Card>
         <CardHeader>
-          <CardTitle>FAQ for Judges</CardTitle>
+          <CardTitle>System Integration FAQ</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>

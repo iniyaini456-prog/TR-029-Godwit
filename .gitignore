@@ -6,3 +6,8 @@ coverage/
 *.log
 .env*
 !.env.example
+dataset/
+__pycache__/
+
+dataset/
+__pycache__/
