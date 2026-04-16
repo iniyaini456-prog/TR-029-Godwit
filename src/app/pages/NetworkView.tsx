@@ -8,8 +8,10 @@ import { Label } from "../components/ui/label";
 
 export function NetworkView() {
   const graphRef = useRef<any>();
+  const containerRef = useRef<HTMLDivElement>(null);
   const [selectedNode, setSelectedNode] = useState<any>(null);
-  const [zoomLevel, setZoomLevel] = useState([3]);
+  const [zoomLevel, setZoomLevel] = useState([1]);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 384 });
 
   // Transform data for force graph
   const graphData = {
@@ -33,12 +35,45 @@ export function NetworkView() {
     })),
   };
 
+  // Handle container sizing
   useEffect(() => {
-    if (graphRef.current) {
-      // Center graph
-      graphRef.current.zoomToFit(400, 100);
-    }
+    const updateSize = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setContainerSize({
+          width: rect.width,
+          height: 384,
+        });
+      }
+    };
+
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
   }, []);
+
+  // Initialize force graph with proper physics and centering
+  useEffect(() => {
+    if (graphRef.current && containerSize.width > 0) {
+      setTimeout(() => {
+        // Set physics parameters for better spacing
+        graphRef.current
+          .d3Force("charge")
+          .strength(-1200); // Increased repulsion force
+
+        graphRef.current
+          .d3Force("link")
+          .distance(() => 150); // Increase link distance
+
+        graphRef.current
+          .d3Force("collision")
+          ?.strength(0.5);
+
+        // Center and zoom
+        graphRef.current.zoomToFit(400, 100, 1.2);
+      }, 100);
+    }
+  }, [containerSize, graphRef]);
 
   const getNodeColor = (type: string) => {
     switch (type) {
@@ -67,7 +102,11 @@ export function NetworkView() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="h-96 border border-gray-200 rounded-lg overflow-hidden bg-white">
+            <div 
+              ref={containerRef}
+              className="border border-gray-200 rounded-lg overflow-hidden bg-white"
+              style={{ width: "100%", height: "384px" }}
+            >
               <ForceGraph2D
                 ref={graphRef}
                 graphData={graphData}
@@ -77,17 +116,24 @@ export function NetworkView() {
                 nodeCanvasObjectMode={() => "after"}
                 nodeCanvasObject={(node: any, ctx) => {
                   const label = node.name.substring(0, 3);
-                  const fontSize = 12 / (zoomLevel[0] / 3);
-                  ctx.font = `${fontSize}px Sans-Serif`;
+                  // Scale font size with zoom level for better readability
+                  const fontSize = Math.max(12, 18 * Math.sqrt(zoomLevel[0] / 2));
+                  ctx.font = `bold ${fontSize}px Sans-Serif`;
                   ctx.textAlign = "center";
                   ctx.textBaseline = "middle";
-                  ctx.fillStyle = "#000";
+                  ctx.fillStyle = "#ffffff";
+                  // Add text shadow for better contrast
+                  ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+                  ctx.shadowBlur = 3;
                   ctx.fillText(label, node.x, node.y);
+                  ctx.shadowColor = "transparent";
                 }}
                 onNodeClick={(node: any) => setSelectedNode(node)}
                 linkColor={() => "rgba(0,0,0,0.2)"}
                 linkWidth={0.5}
-                width={undefined}
+                linkDirectionalParticles={2}
+                linkDirectionalParticleWidth={1}
+                width={containerSize.width}
                 height={384}
               />
             </div>
@@ -96,12 +142,17 @@ export function NetworkView() {
               <Label htmlFor="zoom">Zoom Level: {zoomLevel[0].toFixed(1)}x</Label>
               <Slider
                 id="zoom"
-                min="1"
+                min="0.5"
                 max="5"
                 step="0.1"
                 value={zoomLevel[0]}
                 onChange={(e) => setZoomLevel([parseFloat(e.currentTarget.value)])}
               />
+            </div>
+
+            <div className="text-sm text-gray-600">
+              <p>💡 Nodes: {graphData.nodes.length} | Links: {graphData.links.length}</p>
+              <p>Tip: Click on nodes to see details. Use zoom slider to adjust view.</p>
             </div>
           </div>
         </CardContent>
