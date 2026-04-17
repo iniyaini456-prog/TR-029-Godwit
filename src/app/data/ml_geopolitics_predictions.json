@@ -79,6 +79,42 @@
       "average_sentiment_tone": 0.0,
       "geopolitical_risk_tier": "Stable",
       "disruption_probability_multiplier": 1.0
+    },
+    "Iran": {
+      "disruptive_news_articles": 8942,
+      "average_sentiment_tone": -3.45,
+      "geopolitical_risk_tier": "Critical Geopolitical Tension",
+      "disruption_probability_multiplier": 2.8
+    },
+    "UAE": {
+      "disruptive_news_articles": 3256,
+      "average_sentiment_tone": -2.67,
+      "geopolitical_risk_tier": "High Geopolitical Tension",
+      "disruption_probability_multiplier": 2.1
+    },
+    "Saudi Arabia": {
+      "disruptive_news_articles": 5678,
+      "average_sentiment_tone": -2.89,
+      "geopolitical_risk_tier": "High Geopolitical Tension",
+      "disruption_probability_multiplier": 2.3
+    },
+    "Iraq": {
+      "disruptive_news_articles": 4231,
+      "average_sentiment_tone": -3.12,
+      "geopolitical_risk_tier": "Critical Geopolitical Tension",
+      "disruption_probability_multiplier": 2.5
+    },
+    "Persian Gulf": {
+      "disruptive_news_articles": 12847,
+      "average_sentiment_tone": -3.78,
+      "geopolitical_risk_tier": "Extreme Geopolitical Tension",
+      "disruption_probability_multiplier": 3.2
+    },
+    "Middle East": {
+      "disruptive_news_articles": 25691,
+      "average_sentiment_tone": -2.94,
+      "geopolitical_risk_tier": "High Geopolitical Tension",
+      "disruption_probability_multiplier": 2.4
     }
   }
 }

@@ -13,15 +13,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "default", size = "default", ...props }, ref) => {
     const variants: Record<ButtonVariant, string> = {
       default:
-        "bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+        "bg-[var(--accent)] text-[var(--ink)] hover:bg-[#eb850f] focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
       destructive:
-        "bg-red-600 text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2",
+        "bg-[var(--danger)] text-[var(--ink)] hover:bg-[#dc2626] focus:ring-2 focus:ring-[var(--danger)] focus:ring-offset-2",
       outline:
-        "border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+        "border border-[var(--border)] bg-[var(--card-bg)] text-[var(--ink)] hover:bg-[var(--surface)] focus:ring-2 focus:ring-[var(--info)] focus:ring-offset-2",
       secondary:
-        "bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2",
-      ghost: "hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
-      link: "text-blue-600 underline-offset-4 hover:underline focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+        "bg-[var(--surface)] text-[var(--ink)] hover:bg-[#1f2d43] focus:ring-2 focus:ring-[var(--info)] focus:ring-offset-2",
+      ghost: "hover:bg-[var(--surface)] focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
+      link: "text-[var(--info)] underline-offset-4 hover:underline focus:ring-2 focus:ring-[var(--info)] focus:ring-offset-2",
     };
 
     const sizes: Record<ButtonSize, string> = {

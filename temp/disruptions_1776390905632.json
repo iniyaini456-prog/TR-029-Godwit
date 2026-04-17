@@ -1,0 +1,500 @@
+[
+  {
+    "id": "D1",
+    "name": "Shanghai Port Closure",
+    "type": "port_closure",
+    "probability": 0.15,
+    "impactScore": 85,
+    "duration": 21,
+    "affectedRegions": [
+      "China",
+      "Singapore"
+    ]
+  },
+  {
+    "id": "D2",
+    "name": "Chile Lithium Export Restriction",
+    "type": "geopolitical",
+    "probability": 0.22,
+    "impactScore": 92,
+    "duration": 180,
+    "affectedRegions": [
+      "Chile",
+      "South Korea"
+    ]
+  },
+  {
+    "id": "D3",
+    "name": "Taiwan Semiconductor Shortage",
+    "type": "material_shortage",
+    "probability": 0.35,
+    "impactScore": 95,
+    "duration": 120,
+    "affectedRegions": [
+      "Taiwan"
+    ]
+  },
+  {
+    "id": "D4",
+    "name": "European Energy Crisis",
+    "type": "natural_disaster",
+    "probability": 0.28,
+    "impactScore": 78,
+    "duration": 90,
+    "affectedRegions": [
+      "Germany",
+      "Czech Republic",
+      "Netherlands"
+    ]
+  },
+  {
+    "id": "D5",
+    "name": "US-China Trade Tariffs",
+    "type": "geopolitical",
+    "probability": 0.45,
+    "impactScore": 82,
+    "duration": 365,
+    "affectedRegions": [
+      "China",
+      "USA"
+    ]
+  },
+  {
+    "id": "D6",
+    "name": "Mumbai Port Congestion",
+    "type": "port_closure",
+    "probability": 0.38,
+    "impactScore": 65,
+    "duration": 45,
+    "affectedRegions": [
+      "India"
+    ]
+  },
+  {
+    "id": "D7",
+    "name": "Global Pandemic Wave",
+    "type": "pandemic",
+    "probability": 0.12,
+    "impactScore": 98,
+    "duration": 180,
+    "affectedRegions": [
+      "Global"
+    ]
+  },
+  {
+    "id": "D8",
+    "name": "Rotterdam Cyber Attack",
+    "type": "cyber_attack",
+    "probability": 0.2,
+    "impactScore": 72,
+    "duration": 14,
+    "affectedRegions": [
+      "Netherlands"
+    ]
+  },
+  {
+    "id": "D9",
+    "name": "Mexico Cartel Violence",
+    "type": "geopolitical",
+    "probability": 0.25,
+    "impactScore": 68,
+    "duration": 60,
+    "affectedRegions": [
+      "Mexico"
+    ]
+  },
+  {
+    "id": "D10",
+    "name": "South Korea Rare Earth Shortage",
+    "type": "material_shortage",
+    "probability": 0.3,
+    "impactScore": 88,
+    "duration": 90,
+    "affectedRegions": [
+      "South Korea"
+    ]
+  },
+  {
+    "id": "D11",
+    "name": "Strait of Hormuz Crisis",
+    "type": "geopolitical",
+    "probability": 0.35,
+    "impactScore": 95,
+    "duration": 120,
+    "affectedRegions": [
+      "Iran",
+      "UAE",
+      "Saudi Arabia",
+      "Iraq",
+      "Global Oil Markets"
+    ],
+    "description": "Heightened tensions in the Strait of Hormuz threaten global oil supply routes. 20% of world oil passes through this narrow waterway, affecting petroleum-based materials and transportation costs."
+  },
+  {
+    "id": "D12",
+    "name": "Strait of Hormuz Blockade",
+    "type": "port_closure",
+    "probability": 0.15,
+    "impactScore": 98,
+    "duration": 60,
+    "affectedRegions": [
+      "Persian Gulf",
+      "Middle East",
+      "Asia",
+      "Europe"
+    ],
+    "description": "Complete closure of Strait of Hormuz would halt 20% of global oil supply, causing immediate spikes in fuel and petrochemical prices, severely impacting supply chains dependent on petroleum-derived materials."
+  },
+  {
+    "id": "ml_climate_China_1776390905402",
+    "name": "ML-Predicted Climate Risk in China",
+    "type": "natural_disaster",
+    "probability": 0.14599380800127984,
+    "impactScore": 36.45,
+    "duration": 25.957270489572736,
+    "affectedRegions": [
+      "China"
+    ]
+  },
+  {
+    "id": "ml_climate_USA_1776390905402",
+    "name": "ML-Predicted Climate Risk in USA",
+    "type": "natural_disaster",
+    "probability": 0.14599380800127984,
+    "impactScore": 36.45,
+    "duration": 36.819594290799245,
+    "affectedRegions": [
+      "USA"
+    ]
+  },
+  {
+    "id": "ml_climate_India_1776390905402",
+    "name": "ML-Predicted Climate Risk in India",
+    "type": "natural_disaster",
+    "probability": 0.14599380800127984,
+    "impactScore": 36.45,
+    "duration": 19.2696632148502,
+    "affectedRegions": [
+      "India"
+    ]
+  },
+  {
+    "id": "ml_climate_Mexico_1776390905402",
+    "name": "ML-Predicted Climate Risk in Mexico",
+    "type": "natural_disaster",
+    "probability": 0.14599380800127984,
+    "impactScore": 36.45,
+    "duration": 42.328277335221784,
+    "affectedRegions": [
+      "Mexico"
+    ]
+  },
+  {
+    "id": "ml_geo_USA_1776390905402",
+    "name": "ML-Predicted Geopolitical Tension in USA",
+    "type": "geopolitical",
+    "probability": 0.12560674400329588,
+    "impactScore": 29.4,
+    "duration": 134.55145195466667,
+    "affectedRegions": [
+      "USA"
+    ]
+  },
+  {
+    "id": "ml_geo_Iran_1776390905402",
+    "name": "ML-Predicted Geopolitical Tension in Iran",
+    "type": "geopolitical",
+    "probability": 0.5024269760131835,
+    "impactScore": 100,
+    "duration": 129.91823317206047,
+    "affectedRegions": [
+      "Iran"
+    ]
+  },
+  {
+    "id": "ml_geo_UAE_1776390905402",
+    "name": "ML-Predicted Geopolitical Tension in UAE",
+    "type": "geopolitical",
+    "probability": 0.2826151740074158,
+    "impactScore": 66.15,
+    "duration": 73.9059526364407,
+    "affectedRegions": [
+      "UAE"
+    ]
+  },
+  {
+    "id": "ml_geo_Saudi Arabia_1776390905402",
+    "name": "ML-Predicted Geopolitical Tension in Saudi Arabia",
+    "type": "geopolitical",
+    "probability": 0.3390100386619567,
+    "impactScore": 79.35,
+    "duration": 104.99640477000472,
+    "affectedRegions": [
+      "Saudi Arabia"
+    ]
+  },
+  {
+    "id": "ml_geo_Iraq_1776390905402",
+    "name": "ML-Predicted Geopolitical Tension in Iraq",
+    "type": "geopolitical",
+    "probability": 0.4005317091941834,
+    "impactScore": 93.75,
+    "duration": 121.06530613650159,
+    "affectedRegions": [
+      "Iraq"
+    ]
+  },
+  {
+    "id": "ml_geo_Persian Gulf_1776390905402",
+    "name": "ML-Predicted Geopolitical Tension in Persian Gulf",
+    "type": "geopolitical",
+    "probability": 0.6562311523437501,
+    "impactScore": 100,
+    "duration": 149.70502374853368,
+    "affectedRegions": [
+      "Persian Gulf"
+    ]
+  },
+  {
+    "id": "ml_geo_Middle East_1776390905402",
+    "name": "ML-Predicted Geopolitical Tension in Middle East",
+    "type": "geopolitical",
+    "probability": 0.3691300231933594,
+    "impactScore": 86.39999999999999,
+    "duration": 155.857691346786,
+    "affectedRegions": [
+      "Middle East"
+    ]
+  },
+  {
+    "id": "ml_logistics_Singapore_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Singapore",
+    "type": "port_closure",
+    "probability": 0.27035890370607374,
+    "impactScore": 56.25,
+    "duration": 51.080066387283985,
+    "affectedRegions": [
+      "Singapore"
+    ]
+  },
+  {
+    "id": "ml_logistics_Finland_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Finland",
+    "type": "port_closure",
+    "probability": 0.18143478900000004,
+    "impactScore": 37.74873600000001,
+    "duration": 41.58488828710488,
+    "affectedRegions": [
+      "Finland"
+    ]
+  },
+  {
+    "id": "ml_logistics_Denmark_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Denmark",
+    "type": "port_closure",
+    "probability": 0.1809626101786651,
+    "impactScore": 37.65049599999999,
+    "duration": 42.33997584700647,
+    "affectedRegions": [
+      "Denmark"
+    ]
+  },
+  {
+    "id": "ml_logistics_Switzerland_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Switzerland",
+    "type": "port_closure",
+    "probability": 0.20847865796225454,
+    "impactScore": 43.375396000000016,
+    "duration": 42.06792348886815,
+    "affectedRegions": [
+      "Switzerland"
+    ]
+  },
+  {
+    "id": "ml_logistics_Austria_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Austria",
+    "type": "port_closure",
+    "probability": 0.1809626101786651,
+    "impactScore": 37.65049599999999,
+    "duration": 11.584146587454969,
+    "affectedRegions": [
+      "Austria"
+    ]
+  },
+  {
+    "id": "ml_logistics_Canada_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Canada",
+    "type": "port_closure",
+    "probability": 0.17674068553839112,
+    "impactScore": 36.772096000000005,
+    "duration": 14.3292641488151,
+    "affectedRegions": [
+      "Canada"
+    ]
+  },
+  {
+    "id": "ml_logistics_Korea, Rep._1776390905402",
+    "name": "ML-Predicted Logistics Risk in Korea, Rep.",
+    "type": "port_closure",
+    "probability": 0.17630376752607518,
+    "impactScore": 36.68119225,
+    "duration": 31.521009710650784,
+    "affectedRegions": [
+      "Korea, Rep."
+    ]
+  },
+  {
+    "id": "ml_logistics_Australia_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Australia",
+    "type": "port_closure",
+    "probability": 0.17770380849216824,
+    "impactScore": 36.97248025,
+    "duration": 14.118994974673406,
+    "affectedRegions": [
+      "Australia"
+    ]
+  },
+  {
+    "id": "ml_logistics_Qatar_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Qatar",
+    "type": "port_closure",
+    "probability": 0.17790844374718098,
+    "impactScore": 37.01505600000001,
+    "duration": 38.70840122865483,
+    "affectedRegions": [
+      "Qatar"
+    ]
+  },
+  {
+    "id": "ml_logistics_Kuwait_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Kuwait",
+    "type": "port_closure",
+    "probability": 0.20316331179575853,
+    "impactScore": 42.26950225,
+    "duration": 35.03084095724061,
+    "affectedRegions": [
+      "Kuwait"
+    ]
+  },
+  {
+    "id": "ml_logistics_Moldova_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Moldova",
+    "type": "port_closure",
+    "probability": 0.17607096567967687,
+    "impactScore": 36.63275625000001,
+    "duration": 19.24543961099394,
+    "affectedRegions": [
+      "Moldova"
+    ]
+  },
+  {
+    "id": "ml_logistics_Gabon_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Gabon",
+    "type": "port_closure",
+    "probability": 0.18273645296980764,
+    "impactScore": 38.019556,
+    "duration": 13.178353117497489,
+    "affectedRegions": [
+      "Gabon"
+    ]
+  },
+  {
+    "id": "ml_logistics_Madagascar_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Madagascar",
+    "type": "port_closure",
+    "probability": 0.1873889331761971,
+    "impactScore": 38.987536000000006,
+    "duration": 34.075737216339306,
+    "affectedRegions": [
+      "Madagascar"
+    ]
+  },
+  {
+    "id": "ml_logistics_Yemen, Rep._1776390905402",
+    "name": "ML-Predicted Logistics Risk in Yemen, Rep.",
+    "type": "port_closure",
+    "probability": 0.18448916811382182,
+    "impactScore": 38.384220250000006,
+    "duration": 35.02380083058033,
+    "affectedRegions": [
+      "Yemen, Rep."
+    ]
+  },
+  {
+    "id": "ml_logistics_Angola_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Angola",
+    "type": "port_closure",
+    "probability": 0.21611279674534442,
+    "impactScore": 44.96373024999999,
+    "duration": 23.316735279113335,
+    "affectedRegions": [
+      "Angola"
+    ]
+  },
+  {
+    "id": "ml_logistics_Cameroon_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Cameroon",
+    "type": "port_closure",
+    "probability": 0.20410185371801076,
+    "impactScore": 42.46477225000001,
+    "duration": 30.031419510710652,
+    "affectedRegions": [
+      "Cameroon"
+    ]
+  },
+  {
+    "id": "ml_logistics_Haiti_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Haiti",
+    "type": "port_closure",
+    "probability": 0.1839535546825116,
+    "impactScore": 38.27278224999999,
+    "duration": 20.27466486347712,
+    "affectedRegions": [
+      "Haiti"
+    ]
+  },
+  {
+    "id": "ml_logistics_Somalia_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Somalia",
+    "type": "port_closure",
+    "probability": 0.25131295284699945,
+    "impactScore": 52.287361000000004,
+    "duration": 9.880264840267634,
+    "affectedRegions": [
+      "Somalia"
+    ]
+  },
+  {
+    "id": "ml_logistics_Afghanistan_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Afghanistan",
+    "type": "port_closure",
+    "probability": 0.19949269822554141,
+    "impactScore": 41.50580625,
+    "duration": 21.310537625302914,
+    "affectedRegions": [
+      "Afghanistan"
+    ]
+  },
+  {
+    "id": "ml_logistics_Libya_1776390905402",
+    "name": "ML-Predicted Logistics Risk in Libya",
+    "type": "port_closure",
+    "probability": 0.2307593317430642,
+    "impactScore": 48.011041000000006,
+    "duration": 28.727964872939868,
+    "affectedRegions": [
+      "Libya"
+    ]
+  },
+  {
+    "id": "ml_logistics_South Korea_1776390905402",
+    "name": "ML-Predicted Logistics Risk in South Korea",
+    "type": "port_closure",
+    "probability": 0.17630376752607518,
+    "impactScore": 36.68119225,
+    "duration": 18.45402979392336,
+    "affectedRegions": [
+      "South Korea"
+    ]
+  }
+]

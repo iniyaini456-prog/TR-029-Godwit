@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import {
-  disruptionScenarios,
-  supplyChainNodes,
-  supplyChainEdges,
-  billOfMaterials,
-} from "../data/mockData";
+import { useData } from "../utils/DataContext";
 import { simulateDisruption } from "../utils/simulationEngine";
 import {
   BarChart,
@@ -22,18 +17,36 @@ import {
 } from "recharts";
 
 export function ImpactAnalysis() {
+  const { data, loading, error } = useData();
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg">Loading supply chain data...</div>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-red-500">Error loading data: {error}</div>
+      </div>
+    );
+  }
+
   const [selectedDisruptionId, setSelectedDisruptionId] = useState(
-    disruptionScenarios[0].id
+    data.disruptions[0].id
   );
 
-  const selectedDisruption = disruptionScenarios.find((d) => d.id === selectedDisruptionId);
+  const selectedDisruption = data.disruptions.find((d) => d.id === selectedDisruptionId);
   const impact = selectedDisruption
-    ? simulateDisruption(selectedDisruption, supplyChainNodes, supplyChainEdges)
+    ? simulateDisruption(selectedDisruption, data.nodes, data.edges)
     : null;
 
   const affectedNodeNames = selectedDisruption
     ? selectedDisruption.affectedNodes
-        .map((id) => supplyChainNodes.find((n) => n.id === id)?.name)
+        .map((id) => data.nodes.find((n) => n.id === id)?.name)
         .filter(Boolean)
     : [];
 
@@ -49,17 +62,17 @@ export function ImpactAnalysis() {
     : [];
 
   // BOM impact analysis
-  const criticalBOM = billOfMaterials.filter((b) => b.criticality === "critical");
+  const criticalBOM = data.billOfMaterials.filter((b) => b.criticality === "critical");
 
   // Capacity impact by node type
   const capacityImpact = selectedDisruption
     ? [
         {
           type: "supplier",
-          total: supplyChainNodes
+          total: data.nodes
             .filter((n) => n.type === "supplier")
             .reduce((sum, n) => sum + n.capacity, 0),
-          affected: supplyChainNodes
+          affected: data.nodes
             .filter(
               (n) =>
                 n.type === "supplier" &&
@@ -69,10 +82,10 @@ export function ImpactAnalysis() {
         },
         {
           type: "factory",
-          total: supplyChainNodes
+          total: data.nodes
             .filter((n) => n.type === "factory")
             .reduce((sum, n) => sum + n.capacity, 0),
-          affected: supplyChainNodes
+          affected: data.nodes
             .filter(
               (n) =>
                 n.type === "factory" &&
@@ -82,10 +95,10 @@ export function ImpactAnalysis() {
         },
         {
           type: "dc",
-          total: supplyChainNodes
+          total: data.nodes
             .filter((n) => n.type === "dc")
             .reduce((sum, n) => sum + n.capacity, 0),
-          affected: supplyChainNodes
+          affected: data.nodes
             .filter(
               (n) =>
                 n.type === "dc" &&
@@ -105,7 +118,7 @@ export function ImpactAnalysis() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
-            {disruptionScenarios.map((d) => (
+            {data.disruptions.map((d) => (
               <Button
                 key={d.id}
                 variant={selectedDisruptionId === d.id ? "default" : "outline"}
@@ -211,7 +224,7 @@ export function ImpactAnalysis() {
               <CardContent>
                 <div className="space-y-2">
                   {selectedDisruption.affectedNodes.map((nodeId) => {
-                    const node = supplyChainNodes.find((n) => n.id === nodeId);
+                    const node = data.nodes.find((n) => n.id === nodeId);
                     return (
                       <div key={nodeId} className="p-2 bg-gray-50 rounded">
                         <p className="font-medium text-sm">{node?.name}</p>
@@ -232,7 +245,7 @@ export function ImpactAnalysis() {
               <CardContent>
                 <div className="space-y-2">
                   {criticalBOM.map((item) => {
-                    const supplier = supplyChainNodes.find((n) => n.id === item.supplier);
+                    const supplier = data.nodes.find((n) => n.id === item.supplier);
                     const isAffected = selectedDisruption.affectedNodes.includes(item.supplier);
                     return (
                       <div
@@ -267,7 +280,7 @@ export function ImpactAnalysis() {
                 </p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                   {impact.cascadeEffects.map((nodeId) => {
-                    const node = supplyChainNodes.find((n) => n.id === nodeId);
+                    const node = data.nodes.find((n) => n.id === nodeId);
                     return (
                       <div key={nodeId} className="p-2 bg-orange-50 border border-orange-200 rounded">
                         <p className="text-sm font-medium">{node?.name}</p>

@@ -40,6 +40,20 @@ export interface DisruptionEvent {
   affectedRegions: string[];
   historicalOccurrences: number;
   date?: string;
+  description?: string;
+  llmAnalysis?: {
+    confidence: number;
+    reasoning: string;
+    geopoliticalImpact: number;
+    sources: {
+      articleUrl: string;
+      articleTitle: string;
+      publishedDate: string;
+      source: string;
+    };
+    dataSources: string[];
+    predictionFactors: string[];
+  };
 }
 
 export interface ResilienceStrategy {
@@ -250,6 +264,32 @@ export const disruptionScenarios: DisruptionEvent[] = [
     affectedRegions: ['South Korea'],
     historicalOccurrences: 4,
     date: '2024-04-18'
+  },
+  {
+    id: 'D11',
+    name: 'Strait of Hormuz Crisis',
+    type: 'geopolitical',
+    probability: 0.35,
+    impactScore: 95,
+    duration: 120,
+    affectedNodes: ['S4', 'C4', 'F1'], // Affects oil-dependent suppliers, Indian components, Chinese factories
+    affectedRegions: ['Iran', 'UAE', 'Saudi Arabia', 'Iraq', 'Global Oil Markets'],
+    historicalOccurrences: 3,
+    date: '2024-12-01',
+    description: 'Heightened tensions in the Strait of Hormuz threaten global oil supply routes. 20% of world oil passes through this narrow waterway, affecting petroleum-based materials and transportation costs.'
+  },
+  {
+    id: 'D12',
+    name: 'Strait of Hormuz Blockade',
+    type: 'port_closure',
+    probability: 0.15,
+    impactScore: 98,
+    duration: 60,
+    affectedNodes: ['S4', 'C4', 'F1', 'D1'], // Major impact on polymer suppliers, Indian manufacturing, Chinese ports
+    affectedRegions: ['Persian Gulf', 'Middle East', 'Asia', 'Europe'],
+    historicalOccurrences: 1,
+    date: '2024-12-15',
+    description: 'Complete closure of Strait of Hormuz would halt 20% of global oil supply, causing immediate spikes in fuel and petrochemical prices, severely impacting supply chains dependent on petroleum-derived materials.'
   },
 ];
 

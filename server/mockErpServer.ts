@@ -8,12 +8,26 @@
 
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
+import { createMiroFishRouter } from "./mirofishApi";
+import { createLiveAPIRouter } from "./liveApiIntegration";
 
 const app: Express = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
+
+// ============================================================================
+// MIROFISH MULTI-AGENT AI INTEGRATION
+// ============================================================================
+
+app.use("/api/mirofish", createMiroFishRouter(express));
+
+// ============================================================================
+// LIVE API INTEGRATIONS
+// ============================================================================
+
+app.use("/api/live", createLiveAPIRouter(express));
 
 // ============================================================================
 // MOCK DATA GENERATOR - Simulates real ERP responses
@@ -246,18 +260,31 @@ app.get("/api/capabilities", (req: Request, res: Response) => {
 app.listen(PORT, () => {
   console.log(`
 ╔════════════════════════════════════════════════════════╗
-║  🚀 Mock ERP Server Running                           ║
+║  🚀 Mock ERP & Integration Server Running             ║
 ╠════════════════════════════════════════════════════════╣
 ║  Server: http://localhost:${PORT}                       ║
 ║  API Base: http://localhost:${PORT}/api                ║
 ║                                                        ║
-║  Available Endpoints:                                  ║
+║  📊 ERP Endpoints:                                      ║
 ║  - GET  /api/sap/suppliers                             ║
 ║  - GET  /api/oracle/supply-chain                       ║
 ║  - GET  /api/netsuite/supply-chain                     ║
 ║  - GET  /api/supply-chain?system=generic               ║
 ║  - GET  /api/capabilities                              ║
 ║  - GET  /api/health                                    ║
+║                                                        ║
+║  🔌 Live API Endpoints:                                 ║
+║  - GET  /api/live/all                                  ║
+║  - GET  /api/live/weather                              ║
+║  - GET  /api/live/news                                 ║
+║  - GET  /api/live/geopolitical                         ║
+║  - GET  /api/live/materials                            ║
+║  - GET  /api/live/ports                                ║
+║  - POST /api/live/integrate                            ║
+║                                                        ║
+║  🤖 MiroFish AI Endpoints:                              ║
+║  - POST /api/mirofish/enhance                          ║
+║  - GET  /api/mirofish/status                           ║
 ║                                                        ║
 ║  To connect React app:                                 ║
 ║  VITE_ERP_API_BASE=http://localhost:${PORT} npm run dev  ║

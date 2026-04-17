@@ -2,31 +2,52 @@ import { useRef, useEffect, useState } from "react";
 import ForceGraph2D from "react-force-graph-2d";
 import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
-import { supplyChainNodes, supplyChainEdges } from "../data/mockData";
+import { useData } from "../utils/DataContext";
 import { calculateNetworkMetrics } from "../utils/simulationEngine";
 import { Slider } from "../components/ui/slider";
 import { Label } from "../components/ui/label";
 
 export function NetworkView() {
-  const graphRef = useRef<any>();
+  const { data, loading, error } = useData();
+  const graphRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedNode, setSelectedNode] = useState<any>(null);
   const [zoomLevel, setZoomLevel] = useState([3]);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 500 });
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg">Loading supply chain data...</div>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-red-500">Error loading data: {error}</div>
+      </div>
+    );
+  }
+
   // Transform data for force graph
   const graphData = {
-    nodes: supplyChainNodes.map((node) => ({
-      id: node.id,
-      name: node.name,
-      type: node.type,
-      location: node.location,
-      country: node.country,
-      capacity: node.capacity,
-      tier: node.tier,
-      val: node.capacity / 100, // Size based on capacity
-    })),
-    links: supplyChainEdges.map((edge) => ({
+    nodes: data.nodes.map((node) => {
+      const displayName = node.name || (node as any).label || node.id;
+      return {
+        id: node.id,
+        name: displayName,
+        type: node.type,
+        location: node.location || (node as any).region || "Unknown",
+        country: node.country || "N/A",
+        capacity: node.capacity,
+        tier: node.tier,
+        displayName,
+        val: node.capacity / 100, // Size based on capacity
+      };
+    }),
+    links: data.edges.map((edge) => ({
       source: edge.source,
       target: edge.target,
       leadTime: edge.leadTime,
@@ -100,14 +121,18 @@ export function NetworkView() {
   };
 
   const getNodeLabel = (node: any) => {
+    const name = node.name || node.id || "Unknown";
+    const location = node.location || node.region || "Unknown";
+    const capacity = node.capacity?.toLocaleString?.() ?? "N/A";
     return `
-      <div style="background: rgba(255,255,255,0.95); padding: 10px; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #ccc; color: #333; font-family: sans-serif; min-width: 150px;">
-        <strong style="display:block; margin-bottom: 4px; border-bottom: 1px solid #eee; padding-bottom: 4px; color: ${getNodeColor(node.type)}">${node.name}</strong>
+      <div style="background: rgba(255,255,255,0.95); padding: 10px; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #ccc; color: #111; font-family: sans-serif; min-width: 180px;">
+        <strong style="display:block; margin-bottom: 4px; border-bottom: 1px solid #eee; padding-bottom: 4px; color: ${getNodeColor(node.type)}">${name}</strong>
+        <p style="margin: 2px 0; font-size: 13px;"><b>ID:</b> ${node.id}</p>
         <p style="margin: 2px 0; font-size: 13px;"><b>Type:</b> <span style="text-transform: capitalize;">${node.type}</span></p>
-        <p style="margin: 2px 0; font-size: 13px;"><b>Location:</b> ${node.location}</p>
-        <p style="margin: 2px 0; font-size: 13px;"><b>Capacity:</b> ${node.capacity.toLocaleString()} units</p>
-        <p style="margin: 2px 0; font-size: 13px;"><b>Tier:</b> Tier ${node.tier}</p>
-        <em style="display:block; margin-top: 6px; font-size: 11px; color: #888;">(Click node to view full details below)</em>
+        <p style="margin: 2px 0; font-size: 13px;"><b>Location:</b> ${location}</p>
+        <p style="margin: 2px 0; font-size: 13px;"><b>Capacity:</b> ${capacity} units</p>
+        <p style="margin: 2px 0; font-size: 13px;"><b>Tier:</b> Tier ${node.tier ?? "N/A"}</p>
+        <em style="display:block; margin-top: 6px; font-size: 11px; color: #555;">(Click node to view full details below)</em>
       </div>
     `;
   };
@@ -122,7 +147,7 @@ export function NetworkView() {
           <div className="space-y-4">
             <div 
               ref={containerRef}
-              className="border border-gray-200 rounded-lg overflow-hidden bg-white"
+              className="border border-[var(--border)] rounded-lg overflow-hidden bg-[var(--card-bg)]"
               style={{ width: "100%", height: "500px" }}
             >
               <ForceGraph2D
@@ -133,9 +158,10 @@ export function NetworkView() {
                 nodeLabel={(node: any) => getNodeLabel(node)}
                 nodeCanvasObjectMode={() => "after"}
                 nodeCanvasObject={(node: any, ctx) => {
-                  const label = node.name.substring(0, 3);
+                  const rawLabel = node.name || node.id || "";
+                  const label = rawLabel.length > 8 ? `${rawLabel.substring(0, 8)}...` : rawLabel;
                   // Scale font size with zoom level for better readability
-                  const fontSize = Math.max(12, 18 * Math.sqrt(zoomLevel[0] / 2));
+                  const fontSize = Math.max(12, 16 * Math.sqrt(zoomLevel[0] / 2));
                   ctx.font = `bold ${fontSize}px Sans-Serif`;
                   ctx.textAlign = "center";
                   ctx.textBaseline = "middle";
@@ -151,10 +177,11 @@ export function NetworkView() {
                   // Auto scroll safely to the details panel when clicked
                   window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
                 }}
-                linkColor={() => "rgba(0,0,0,0.2)"}
-                linkWidth={0.5}
+                linkColor={() => "rgba(255,255,255,0.35)"}
+                linkWidth={() => 1.4}
                 linkDirectionalParticles={2}
-                linkDirectionalParticleWidth={1}
+                linkDirectionalParticleWidth={1.2}
+                linkDirectionalParticleColor={() => "rgba(255,255,255,0.75)"}
                 width={containerSize.width}
                 height={500}
               />
@@ -172,9 +199,9 @@ export function NetworkView() {
               />
             </div>
 
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-[var(--ink)]">
               <p>💡 Nodes: {graphData.nodes.length} | Links: {graphData.links.length}</p>
-              <p>Tip: Click on nodes to see details. Use zoom slider to adjust view.</p>
+              <p className="text-[var(--ink-dim)]">Tip: Click on nodes to see details. Use zoom slider to adjust view.</p>
             </div>
           </div>
         </CardContent>
@@ -198,7 +225,7 @@ export function NetworkView() {
                   className="w-4 h-4 rounded-full"
                   style={{ backgroundColor: getNodeColor(item.type) }}
                 />
-                <span className="text-sm text-gray-700">{item.label}</span>
+                <span className="text-sm text-[var(--ink)]">{item.label}</span>
               </div>
             ))}
           </div>
@@ -214,23 +241,23 @@ export function NetworkView() {
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
-                <p className="text-xs text-gray-600">Type</p>
-                <p className="text-sm font-semibold capitalize">{selectedNode.type}</p>
+                <p className="text-xs text-[var(--ink-dim)]">Type</p>
+                <p className="text-sm font-semibold capitalize text-[var(--ink)]">{selectedNode.type}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-600">Location</p>
-                <p className="text-sm font-semibold">{selectedNode.location}</p>
+                <p className="text-xs text-[var(--ink-dim)]">Location</p>
+                <p className="text-sm font-semibold text-[var(--ink)]">{selectedNode.location}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-600">Country</p>
-                <p className="text-sm font-semibold">{selectedNode.country}</p>
+                <p className="text-xs text-[var(--ink-dim)]">Country</p>
+                <p className="text-sm font-semibold text-[var(--ink)]">{selectedNode.country}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-600">Capacity</p>
-                <p className="text-sm font-semibold">{selectedNode.capacity.toLocaleString()}</p>
+                <p className="text-xs text-[var(--ink-dim)]">Capacity</p>
+                <p className="text-sm font-semibold text-[var(--ink)]">{selectedNode.capacity.toLocaleString()}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-600">Supply Tier</p>
+                <p className="text-xs text-[var(--ink-dim)]">Supply Tier</p>
                 <Badge variant="secondary">Tier {selectedNode.tier}</Badge>
               </div>
             </div>
@@ -246,27 +273,27 @@ export function NetworkView() {
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
-              <p className="text-sm text-gray-600">Total Nodes</p>
-              <p className="text-2xl font-bold">{supplyChainNodes.length}</p>
+              <p className="text-sm text-[var(--ink-dim)]">Total Nodes</p>
+              <p className="text-2xl font-bold text-[var(--ink)]">{data.nodes.length}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Total Connections</p>
-              <p className="text-2xl font-bold">{supplyChainEdges.length}</p>
+              <p className="text-sm text-[var(--ink-dim)]">Total Connections</p>
+              <p className="text-2xl font-bold text-[var(--ink)]">{data.edges.length}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Avg Lead Time</p>
-              <p className="text-2xl font-bold">
+              <p className="text-sm text-[var(--ink-dim)]">Avg Lead Time</p>
+              <p className="text-2xl font-bold text-[var(--ink)]">
                 {Math.round(
-                  supplyChainEdges.reduce((sum, e) => sum + e.leadTime, 0) /
-                    supplyChainEdges.length
+                  data.edges.reduce((sum, e) => sum + e.leadTime, 0) /
+                    data.edges.length
                 )}{" "}
                 days
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Avg Reliability</p>
-              <p className="text-2xl font-bold">
-                {(calculateNetworkMetrics(supplyChainNodes, supplyChainEdges).networkReliability * 100).toFixed(1)}%
+              <p className="text-sm text-[var(--ink-dim)]">Avg Reliability</p>
+              <p className="text-2xl font-bold text-[var(--ink)]">
+                {(calculateNetworkMetrics(data.nodes, data.edges).networkReliability * 100).toFixed(1)}%
               </p>
             </div>
           </div>

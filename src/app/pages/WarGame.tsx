@@ -2,12 +2,7 @@ import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
-import {
-  disruptionScenarios,
-  resilienceStrategies,
-  supplyChainNodes,
-  supplyChainEdges,
-} from "../data/mockData";
+import { useData } from "../utils/DataContext";
 import {
   simulateDisruption,
   evaluateStrategy,
@@ -24,20 +19,38 @@ import {
 } from "recharts";
 
 export function WarGame() {
+  const { data, loading, error } = useData();
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg">Loading supply chain data...</div>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-red-500">Error loading data: {error}</div>
+      </div>
+    );
+  }
+
   const [selectedDisruption, setSelectedDisruption] = useState(
-    disruptionScenarios[0].id
+    data.disruptions[0].id
   );
   const [selectedStrategies, setSelectedStrategies] = useState<string[]>([]);
 
-  const disruption = disruptionScenarios.find((d) => d.id === selectedDisruption);
+  const disruption = data.disruptions.find((d) => d.id === selectedDisruption);
   const baselineImpact = disruption
-    ? simulateDisruption(disruption, supplyChainNodes, supplyChainEdges)
+    ? simulateDisruption(disruption, data.nodes, data.edges)
     : null;
 
   // Calculate impact with strategies
   const scenarioResults = selectedStrategies.length > 0 && disruption && baselineImpact
     ? selectedStrategies.map((stratId) => {
-        const strategy = resilienceStrategies.find((s) => s.id === stratId);
+        const strategy = data.strategies.find((s) => s.id === stratId);
         if (!strategy) return null;
         const eval_result = evaluateStrategy(strategy, baselineImpact, 1000000000);
         return {
@@ -80,7 +93,7 @@ export function WarGame() {
         <CardContent>
           <p className="text-sm text-gray-600 mb-4">Select a disruption scenario to test:</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-            {disruptionScenarios.map((d) => (
+            {data.disruptions.map((d) => (
               <Button
                 key={d.id}
                 variant={selectedDisruption === d.id ? "default" : "outline"}
@@ -139,7 +152,7 @@ export function WarGame() {
                 Select strategies to test against this disruption:
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {resilienceStrategies.map((strategy) => (
+                {data.strategies.map((strategy) => (
                   <Button
                     key={strategy.id}
                     variant={selectedStrategies.includes(strategy.id) ? "default" : "outline"}

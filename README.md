@@ -16,8 +16,40 @@ View your app in AI Studio: https://ai.studio/apps/d13ac899-835c-4952-ae78-a5c84
 1. Install dependencies:
    `npm install`
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+3. **NEW:** Set additional API keys for enhanced functionality:
+   - `VITE_OPENAI_API_KEY`: For LLM-powered news analysis (optional)
+   - `VITE_NEWS_API_KEY`: For live news disruption detection (optional)
+   - `VITE_OPENWEATHER_API_KEY`: For weather-based disruptions (optional)
+4. Run the app:
    `npm run dev`
+
+## 🤖 Advanced Features
+
+### LLM-Powered Geopolitical Analysis
+The application now uses OpenAI's GPT-4o-mini to analyze news articles for geopolitical supply chain impacts:
+
+- **Real-time News Analysis**: Automatically scans news for supply chain risks
+- **Geopolitical Impact Scoring**: LLM evaluates tension levels and disruption probabilities
+- **Strait of Hormuz Monitoring**: Special focus on Middle East geopolitical risks
+- **Confidence Scoring**: Each analysis includes confidence levels and reasoning
+
+### Strait of Hormuz Crisis Integration
+Added specific disruption scenarios for the critical Strait of Hormuz waterway:
+
+- **Crisis Scenario**: Models the impact of heightened tensions
+- **Blockade Scenario**: Simulates complete waterway closure
+- **ML-Enhanced Predictions**: Uses geopolitical ML models for risk assessment
+
+### API Keys Setup
+Create a `.env.local` file with:
+```
+VITE_OPENAI_API_KEY=your_openai_key_here
+VITE_NEWS_API_KEY=your_newsapi_key_here
+VITE_OPENWEATHER_API_KEY=your_openweather_key_here
+GEMINI_API_KEY=your_gemini_key_here
+```
+
+Without these keys, the app falls back to static data and basic analysis.
 
 ## 🤖 Machine Learning Integration (New)
 

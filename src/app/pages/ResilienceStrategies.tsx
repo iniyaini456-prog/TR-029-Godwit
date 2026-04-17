@@ -2,13 +2,7 @@ import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { Button } from "../components/ui/button";
-import {
-  resilienceStrategies,
-  disruptionScenarios,
-  supplyChainNodes,
-  supplyChainEdges,
-  budgetConstraints,
-} from "../data/mockData";
+import { useData } from "../utils/DataContext";
 import {
   evaluateStrategy,
   findParetoOptimalStrategies,
@@ -28,15 +22,33 @@ import {
 } from "recharts";
 
 export function ResilienceStrategies() {
-  const [selectedStrategy, setSelectedStrategy] = useState(resilienceStrategies[0].id);
-  const [selectedBudget, setSelectedBudget] = useState(budgetConstraints.totalBudget);
+  const { data, loading, error } = useData();
 
-  const strategy = resilienceStrategies.find((s) => s.id === selectedStrategy);
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg">Loading supply chain data...</div>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-red-500">Error loading data: {error}</div>
+      </div>
+    );
+  }
+
+  const [selectedStrategy, setSelectedStrategy] = useState(data.strategies[0].id);
+  const [selectedBudget, setSelectedBudget] = useState(data.budgetConstraints.totalBudget);
+
+  const strategy = data.strategies.find((s) => s.id === selectedStrategy);
 
   // Calculate average disruption impact
-  const disruptions = disruptionScenarios;
+  const disruptions = data.disruptions;
   const impacts = disruptions.map((d) =>
-    simulateDisruption(d, supplyChainNodes, supplyChainEdges)
+    simulateDisruption(d, data.nodes, data.edges)
   );
   const avgImpact = {
     recoveryTime:
@@ -51,14 +63,14 @@ export function ResilienceStrategies() {
 
   // Get Pareto optimal strategies
   const paretoStrategies = findParetoOptimalStrategies(
-    resilienceStrategies,
-    disruptionScenarios,
-    supplyChainNodes,
-    supplyChainEdges,
+    data.strategies,
+    data.disruptions,
+    data.nodes,
+    data.edges,
     selectedBudget
   );
 
-  const strategyComparison = resilienceStrategies.map((s) => {
+  const strategyComparison = data.strategies.map((s) => {
     const avgImpactForEval = {
       recoveryTime: avgImpact.recoveryTime,
       financialImpact: avgImpact.financialImpact,
@@ -94,20 +106,32 @@ export function ResilienceStrategies() {
                 <label htmlFor="budget" className="text-sm font-medium">
                   Available Budget
                 </label>
-                <span className="text-sm font-bold">
-                  ${(selectedBudget / 1000000).toFixed(1)}M / ${(budgetConstraints.totalBudget / 1000000).toFixed(1)}M
-                </span>
+                <div className="text-right">
+                  <div className="text-sm font-bold">
+                    ${(selectedBudget / 1000000).toFixed(1)}M / ${(data.budgetConstraints.totalBudget / 1000000).toFixed(1)}M
+                  </div>
+                  <div className="text-xs text-gray-600">
+                    ${selectedBudget.toLocaleString()} | {((selectedBudget / data.budgetConstraints.totalBudget) * 100).toFixed(0)}% allocated
+                  </div>
+                </div>
               </div>
-              <input
-                id="budget"
-                type="range"
-                min="0"
-                max={budgetConstraints.totalBudget}
-                step="500000"
-                value={selectedBudget}
-                onChange={(e) => setSelectedBudget(parseInt(e.target.value))}
-                className="w-full"
-              />
+              <div className="relative">
+                <input
+                  id="budget"
+                  type="range"
+                  min="0"
+                  max={data.budgetConstraints.totalBudget}
+                  step="500000"
+                  value={selectedBudget}
+                  onChange={(e) => setSelectedBudget(parseInt(e.target.value))}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                  <span>$0</span>
+                  <span>${(data.budgetConstraints.totalBudget / 2000000).toFixed(1)}M</span>
+                  <span>${(data.budgetConstraints.totalBudget / 1000000).toFixed(1)}M</span>
+                </div>
+              </div>
             </div>
             <p className="text-xs text-gray-600">
               Drag to allocate budget for resilience initiatives
@@ -216,7 +240,7 @@ export function ResilienceStrategies() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-            {resilienceStrategies.map((s) => (
+            {data.strategies.map((s) => (
               <Button
                 key={s.id}
                 variant={selectedStrategy === s.id ? "default" : "outline"}

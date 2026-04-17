@@ -23,33 +23,58 @@ import {
   Pie,
   Cell,
 } from "recharts";
-import {
-  disruptionScenarios,
-  supplyChainNodes,
-  supplyChainEdges,
-  budgetConstraints,
-} from "../data/mockData";
+import { useData } from "../utils/DataContext";
 import {
   calculateNetworkMetrics,
   runMonteCarlo,
 } from "../utils/simulationEngine";
 
 export function Dashboard() {
-  const metrics = calculateNetworkMetrics(supplyChainNodes, supplyChainEdges);
+  console.log("🎯 Dashboard component rendered");
+  const { data, loading, error } = useData();
+  console.log("📊 Dashboard data state:", { data, loading, error });
+
+  if (loading) {
+    console.log("⏳ Dashboard showing loading state");
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-lg">Loading supply chain data...</div>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    console.log("❌ Dashboard showing error state:", error);
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-red-500 text-center">
+          <div className="text-lg font-semibold mb-2">Error loading data</div>
+          <div className="text-sm">{error || 'Unknown error'}</div>
+          <div className="text-xs mt-2 text-gray-500">
+            Check console for details. The app should still work with demo data.
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  console.log("✅ Dashboard rendering with data:", data);
+
+  const metrics = calculateNetworkMetrics(data.nodes, data.edges);
   const monteCarloResults = runMonteCarlo(
-    disruptionScenarios,
-    supplyChainNodes,
-    supplyChainEdges,
+    data.disruptions,
+    data.nodes,
+    data.edges,
     500
   );
 
   // Top disruptions by impact
-  const topDisruptions = [...disruptionScenarios]
+  const topDisruptions = [...data.disruptions]
     .sort((a, b) => b.impactScore * b.probability - a.impactScore * a.probability)
     .slice(0, 5);
 
   // Disruption type distribution
-  const typeDistribution = disruptionScenarios.reduce(
+  const typeDistribution = data.disruptions.reduce(
     (acc, d) => {
       acc[d.type] = (acc[d.type] || 0) + 1;
       return acc;
@@ -82,13 +107,13 @@ export function Dashboard() {
           <CardContent className="pt-4">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-600">Network Health</span>
+                <span className="text-sm font-medium text-[var(--ink-dim)]">Network Health</span>
                 <Activity className="text-green-600" size={20} />
               </div>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-[var(--ink)]">
                 {Math.round(metrics.networkReliability * 100)}%
               </p>
-              <p className="text-xs text-gray-500">Reliability Score</p>
+              <p className="text-xs text-[var(--ink-dim)]">Reliability Score</p>
             </div>
           </CardContent>
         </Card>
@@ -97,11 +122,11 @@ export function Dashboard() {
           <CardContent className="pt-4">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-600">Avg Lead Time</span>
+                <span className="text-sm font-medium text-[var(--ink-dim)]">Avg Lead Time</span>
                 <Clock className="text-blue-600" size={20} />
               </div>
-              <p className="text-2xl font-bold text-gray-900">{metrics.avgLeadTime}d</p>
-              <p className="text-xs text-gray-500">Days to deliver</p>
+              <p className="text-2xl font-bold text-[var(--ink)]">{metrics.avgLeadTime}d</p>
+              <p className="text-xs text-[var(--ink-dim)]">Days to deliver</p>
             </div>
           </CardContent>
         </Card>
@@ -110,15 +135,15 @@ export function Dashboard() {
           <CardContent className="pt-4">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-600">
+                <span className="text-sm font-medium text-[var(--ink-dim)]">
                   Expected Financial Impact
                 </span>
                 <DollarSign className="text-orange-600" size={20} />
               </div>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-2xl font-bold text-[var(--ink)]">
                 ${(monteCarloResults.expectedFinancialImpact / 1000000).toFixed(1)}M
               </p>
-              <p className="text-xs text-gray-500">Monte Carlo (500 iterations)</p>
+              <p className="text-xs text-[var(--ink-dim)]">Monte Carlo (500 iterations)</p>
             </div>
           </CardContent>
         </Card>
@@ -127,11 +152,11 @@ export function Dashboard() {
           <CardContent className="pt-4">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-600">Network Nodes</span>
+                <span className="text-sm font-medium text-[var(--ink-dim)]">Network Nodes</span>
                 <Target className="text-purple-600" size={20} />
               </div>
-              <p className="text-2xl font-bold text-gray-900">{metrics.totalNodes}</p>
-              <p className="text-xs text-gray-500">{metrics.totalEdges} connections</p>
+              <p className="text-2xl font-bold text-[var(--ink)]">{metrics.totalNodes}</p>
+              <p className="text-xs text-[var(--ink-dim)]">{metrics.totalEdges} connections</p>
             </div>
           </CardContent>
         </Card>
@@ -171,8 +196,6 @@ export function Dashboard() {
                   data={pieData}
                   cx="50%"
                   cy="50%"
-                  labelLine={false}
-                  label={({ name, value }) => `${name}: ${value}`}
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
@@ -182,6 +205,7 @@ export function Dashboard() {
                   ))}
                 </Pie>
                 <Tooltip />
+                <Legend />
               </PieChart>
             </ResponsiveContainer>
           </CardContent>
@@ -201,10 +225,10 @@ export function Dashboard() {
           <CardContent>
             <div className="space-y-3">
               {topDisruptions.map((d) => (
-                <div key={d.id} className="flex justify-between items-start p-2 bg-gray-50 rounded">
+                <div key={d.id} className="flex justify-between items-start p-2 bg-[var(--card-bg)] rounded">
                   <div>
-                    <p className="font-medium text-sm">{d.name}</p>
-                    <p className="text-xs text-gray-600">{d.type.replace(/_/g, " ")}</p>
+                    <p className="font-medium text-sm text-[var(--ink)]">{d.name}</p>
+                    <p className="text-xs text-[var(--ink-dim)]">{d.type.replace(/_/g, " ")}</p>
                   </div>
                   <Badge variant="destructive">
                     {Math.round(d.impactScore * d.probability)}
@@ -223,14 +247,14 @@ export function Dashboard() {
           <CardContent className="space-y-4">
             <div>
               <div className="flex justify-between mb-2">
-                <span className="text-sm font-medium">Current Service Level</span>
-                <span className="text-sm font-bold">{budgetConstraints.currentServiceLevel}%</span>
+                <span className="text-sm font-medium text-[var(--ink)]">Current Service Level</span>
+                <span className="text-sm font-bold text-[var(--ink)]">{data.budgetConstraints.currentServiceLevel}%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-gray-700 rounded-full h-2">
                 <div
                   className="bg-blue-600 h-2 rounded-full"
                   style={{
-                    width: `${budgetConstraints.currentServiceLevel}%`,
+                    width: `${data.budgetConstraints.currentServiceLevel}%`,
                   }}
                 />
               </div>
@@ -238,25 +262,25 @@ export function Dashboard() {
 
             <div>
               <div className="flex justify-between mb-2">
-                <span className="text-sm font-medium">Target Service Level</span>
-                <span className="text-sm font-bold">{budgetConstraints.serviceLevelTarget}%</span>
+                <span className="text-sm font-medium text-[var(--ink)]">Target Service Level</span>
+                <span className="text-sm font-bold text-[var(--ink)]">{data.budgetConstraints.serviceLevelTarget}%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-gray-700 rounded-full h-2">
                 <div
                   className="bg-green-600 h-2 rounded-full"
                   style={{
-                    width: `${budgetConstraints.serviceLevelTarget}%`,
+                    width: `${data.budgetConstraints.serviceLevelTarget}%`,
                   }}
                 />
               </div>
             </div>
 
-            <div className="pt-4 border-t border-gray-200">
-              <p className="text-xs text-gray-600">Budget Information</p>
-              <p className="text-lg font-bold text-gray-900">
-                ${(budgetConstraints.totalBudget / 1000000).toFixed(1)}M
+            <div className="pt-4 border-t border-[var(--border)]">
+              <p className="text-xs text-[var(--ink-dim)]">Budget Information</p>
+              <p className="text-lg font-bold text-[var(--ink)]">
+                ${(data.budgetConstraints.totalBudget / 1000000).toFixed(1)}M
               </p>
-              <p className="text-xs text-gray-600">Total resilience budget available</p>
+              <p className="text-xs text-[var(--ink-dim)]">Total resilience budget available</p>
             </div>
           </CardContent>
         </Card>
